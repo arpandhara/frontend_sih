@@ -95,10 +95,14 @@ main {
     color: #FAF1E4;
     gap: 1vw;
     margin-top: .5vw;
+    margin-bottom: .5vw;
 }
 
 .forms_main{
     width: 70%;
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
 }
 
 .languages , .name , #states{
@@ -110,5 +114,20 @@ main {
 
 .languages:focus , #states:focus{
     outline: none;
+}
+
+.forms_submit{
+    background-color: #FAF1E4;
+    border: 2px solid black;
+    padding: 1vw 2vw;
+    width: 50%;
+    margin: auto;
+    border-radius: 15px;
+    font-size: 1vw;
+    transition: all 0.3s ease-in-out;
+}
+
+.forms_submit:hover{
+    background-color: #f7dbb3;
 }
 
