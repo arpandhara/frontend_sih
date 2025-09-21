@@ -6,89 +6,99 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Krishi Ai</title>
     <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="login-responsive.css">
 </head>
 
 <body>
     <main>
-
         <div class="forms">
             <div class="forms_main">
+                <div class="welcome_box_mobile">
+                    <h1 data-translate-key="ui.welcomeTitle">Welcome To Krishi.AI</h1>
+                    <p data-translate-key="ui.welcomeSubtitle">Your personal farming advisory</p>
+                </div>
                 <div class="forms_instruction">
-                    <p>Please Fill Up this form</p>
+                    <p data-translate-key="ui.formInstruction">Please Fill Up this form</p>
                 </div>
                 <form class="login_form" action="submit">
-                    <label for="languages">Choose your language</label>
+                    <label for="languages" data-translate-key="ui.chooseLanguageLabel">Choose your language</label>
                     <select name="languages" id="languages" class="languages">
-                        <option value="english">English</option>
-                        <option value="hindi">हिन्दी</option>
-                        <option value="bengali">বাংলা</option>
-                        <option value="telugu">తెలుగు</option>
-                        <option value="marathi">मराठी</option>
-                        <option value="tamil">தமிழ்</option>
-                        <option value="urdu">اردو</option>
-                        <option value="gujarati">ગુજરાતી</option>
-                        <option value="kannada">ಕನ್ನಡ</option>
-                        <option value="odia">ଓଡିଆ</option>
-                        <option value="malayalam">മലയാളം</option>
-                        <option value="punjabi">ਪੰਜਾਬੀ</option>
-                        <option value="assamese">অসমীয়া</option>
+                        <option value="en">English</option>
+                        <option value="hi">हिन्दी</option>
+                        <option value="bn">বাংলা</option>
+                        <option value="te">తెలుగు</option>
+                        <option value="mr">मराठी</option>
+                        <option value="ta">தமிழ்</option>
+                        <option value="ur">اردو</option>
+                        <option value="gu">ગુજરાતી</option>
+                        <option value="kn">ಕನ್ನಡ</option>
+                        <option value="or">ଓଡିଆ</option>
+                        <option value="ml">മലയാളം</option>
+                        <option value="pa">ਪੰਜਾਬੀ</option>
+                        <option value="as">অসমীয়া</option>
                     </select>
-                    <label for="name">Your name</label>
-                    <input type="text" class="name" placeholder="Enter Your Name">
-                    <label for="states">Enter Your state</label>
-                        <select name="states" id="states">
-                            <option value="andhra_pradesh">Andhra Pradesh</option>
-                            <option value="arunachal_pradesh">Arunachal Pradesh</option>
-                            <option value="assam">Assam</option>
-                            <option value="bihar">Bihar</option>
-                            <option value="chhattisgarh">Chhattisgarh</option>
-                            <option value="goa">Goa</option>
-                            <option value="gujarat">Gujarat</option>
-                            <option value="haryana">Haryana</option>
-                            <option value="himachal_pradesh">Himachal Pradesh</option>
-                            <option value="jharkhand">Jharkhand</option>
-                            <option value="karnataka">Karnataka</option>
-                            <option value="kerala">Kerala</option>
-                            <option value="madhya_pradesh">Madhya Pradesh</option>
-                            <option value="maharashtra">Maharashtra</option>
-                            <option value="manipur">Manipur</option>
-                            <option value="meghalaya">Meghalaya</option>
-                            <option value="mizoram">Mizoram</option>
-                            <option value="nagaland">Nagaland</option>
-                            <option value="odisha">Odisha</option>
-                            <option value="punjab">Punjab</option>
-                            <option value="rajasthan">Rajasthan</option>
-                            <option value="sikkim">Sikkim</option>
-                            <option value="tamil_nadu">Tamil Nadu</option>
-                            <option value="telangana">Telangana</option>
-                            <option value="tripura">Tripura</option>
-                            <option value="uttar_pradesh">Uttar Pradesh</option>
-                            <option value="uttarakhand">Uttarakhand</option>
-                            <option value="west_bengal">West Bengal</option>
-                            <option value="delhi">Delhi</option>
-                            <option value="jammu_kashmir">Jammu & Kashmir</option>
-                            <option value="ladakh">Ladakh</option>
-                            <option value="puducherry">Puducherry</option>
-                            <option value="chandigarh">Chandigarh</option>
-                            <option value="andaman_nicobar">Andaman & Nicobar Islands</option>
-                            <option value="lakshadweep">Lakshadweep</option>
-                        </select>
+                    <label for="name" data-translate-key="ui.nameLabel">Your name</label>
+                    <input type="text" class="name" placeholder="Enter Your Name"
+                        data-translate-key="ui.namePlaceholder">
+                    <label for="states" data-translate-key="ui.stateLabel">Enter Your state</label>
+                    <select name="states" id="states">
+                        <option value="andhra_pradesh" data-translate-key="states.andhra_pradesh">Andhra Pradesh
+                        </option>
+                        <option value="arunachal_pradesh" data-translate-key="states.arunachal_pradesh">Arunachal
+                            Pradesh</option>
+                        <option value="assam" data-translate-key="states.assam">Assam</option>
+                        <option value="bihar" data-translate-key="states.bihar">Bihar</option>
+                        <option value="chhattisgarh" data-translate-key="states.chhattisgarh">Chhattisgarh</option>
+                        <option value="goa" data-translate-key="states.goa">Goa</option>
+                        <option value="gujarat" data-translate-key="states.gujarat">Gujarat</option>
+                        <option value="haryana" data-translate-key="states.haryana">Haryana</option>
+                        <option value="himachal_pradesh" data-translate-key="states.himachal_pradesh">Himachal Pradesh
+                        </option>
+                        <option value="jharkhand" data-translate-key="states.jharkhand">Jharkhand</option>
+                        <option value="karnataka" data-translate-key="states.karnataka">Karnataka</option>
+                        <option value="kerala" data-translate-key="states.kerala">Kerala</option>
+                        <option value="madhya_pradesh" data-translate-key="states.madhya_pradesh">Madhya Pradesh
+                        </option>
+                        <option value="maharashtra" data-translate-key="states.maharashtra">Maharashtra</option>
+                        <option value="manipur" data-translate-key="states.manipur">Manipur</option>
+                        <option value="meghalaya" data-translate-key="states.meghalaya">Meghalaya</option>
+                        <option value="mizoram" data-translate-key="states.mizoram">Mizoram</option>
+                        <option value="nagaland" data-translate-key="states.nagaland">Nagaland</option>
+                        <option value="odisha" data-translate-key="states.odisha">Odisha</option>
+                        <option value="punjab" data-translate-key="states.punjab">Punjab</option>
+                        <option value="rajasthan" data-translate-key="states.rajasthan">Rajasthan</option>
+                        <option value="sikkim" data-translate-key="states.sikkim">Sikkim</option>
+                        <option value="tamil_nadu" data-translate-key="states.tamil_nadu">Tamil Nadu</option>
+                        <option value="telangana" data-translate-key="states.telangana">Telangana</option>
+                        <option value="tripura" data-translate-key="states.tripura">Tripura</option>
+                        <option value="uttar_pradesh" data-translate-key="states.uttar_pradesh">Uttar Pradesh</option>
+                        <option value="uttarakhand" data-translate-key="states.uttarakhand">Uttarakhand</option>
+                        <option value="west_bengal" data-translate-key="states.west_bengal">West Bengal</option>
+                        <option value="delhi" data-translate-key="states.delhi">Delhi</option>
+                        <option value="jammu_kashmir" data-translate-key="states.jammu_kashmir">Jammu & Kashmir</option>
+                        <option value="ladakh" data-translate-key="states.ladakh">Ladakh</option>
+                        <option value="puducherry" data-translate-key="states.puducherry">Puducherry</option>
+                        <option value="chandigarh" data-translate-key="states.chandigarh">Chandigarh</option>
+                        <option value="andaman_nicobar" data-translate-key="states.andaman_nicobar">Andaman & Nicobar
+                            Islands</option>
+                        <option value="lakshadweep" data-translate-key="states.lakshadweep">Lakshadweep</option>
+                    </select>
                 </form>
-                <button type="submit" class="forms_submit">Submit</button>
+                <button type="submit" class="forms_submit" data-translate-key="ui.submitButton">Submit</button>
             </div>
         </div>
         <div class="welcome">
             <div class="welcome_box">
-                <h1>Welcome To Krishi.AI</h1>
-                <p>Your personal farming advisory</p>
+                <h1 data-translate-key="ui.welcomeTitle">Welcome To Krishi.AI</h1>
+                <p data-translate-key="ui.welcomeSubtitle">Your personal farming advisory</p>
             </div>
             <div class="welcome_img">
-                <img loading="lazy" src="assets/Adobe Express - file.webp" alt="">
+                <img loading="lazy" src="assets/Adobe Express - file.webp" alt="Group of Indian Farmers">
             </div>
         </div>
-
     </main>
 
+    <script src="language_change.js"></script>
     <script src="login.js"></script>
 </body>
 
