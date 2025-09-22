@@ -392,3 +392,114 @@ main {
     color: #435334;
 }
 
+.welcome_components{
+    position: absolute;
+    bottom: 0;
+    height: 80%;
+    width: 100%;
+    /* background-color: black; */
+}
+
+.text_component{
+    /* background-color: #39462C; */
+    display:  flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.text_component h1{
+    font-weight: 700;
+    font-size: 2.5vw;
+}
+
+.big_direct_links{
+    width: 100%;
+    height: 60%;
+    /* background-color: #39462C; */
+    margin-top: 1.5vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1vw;
+}
+
+.link_to_pesticides , .link_to_subsidies , .link_to_weather{
+    height: 100%;
+    width: 30%;
+    /* background-color: black; */
+    border-radius: 15px;
+    border: 1px solid #BA9359;
+    display:  flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: .5vw;
+    gap: .5vw;
+}
+
+.link_to_questions{
+    height: 20%;
+    width: 100%;
+    /* background-color: #BA9359; */
+    padding: 1vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1vw;
+}
+
+.q1 , .q2 , .q3 , .q4{
+    height: 100%;
+    width: 24%;
+    border: 1px solid #BA9359;
+    padding: .5vw;
+    border-radius: 10px;
+}
+
+.q1 h3, .q2 h3, .q3 h3, .q4 h3{
+    font-size: .9vw;
+}
+
+.q1 p, .q2 p, .q3 p, .q4 p{
+    font-size: .7vw;
+    color: rgb(95, 94, 94);
+}
+
+.link_to_text_div{
+    width: 100%;
+    height: 20%;/
+    /* background-color: #39462C; */
+}
+
+.img_div{
+    width: 100%;
+    height: 80%;
+    background-color: black;
+    border-radius: 10px;
+}
+
+.link_to_pesticides .img_div{
+    background-image: url(assets/pexels-dinukagunawardana-17903068.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.link_to_subsidies .img_div{
+    background-image: url(assets/13e4bdc5b07b42c75a54c6484beb0524.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.link_to_weather .img_div{
+    background-image: url(assets/d5491c568a1d75afd7799148a59da434.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.link_to_text_div p{
+    font-size: .8vw;
+    color: rgb(95, 94, 94);
+}
