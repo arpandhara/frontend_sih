@@ -1,3 +1,5 @@
+// require('dotenv').config()
+
 // take the value from the input field 
 
 let chat_input = document.querySelector(".chat_input");
@@ -6,8 +8,17 @@ let welcome_components = document.querySelector(".welcome_components");
 let chat_output_box = document.querySelector(".chat_output_box");
 
 
+function formatLLMResponse(text) {
+  return text
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')   // bold
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')               // italic
+    .replace(/\n/g, '<br>');                             // line breaks
+}
+
+
+
 async function getGemmaCompletion(value) {
-  const apiKey = "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";
+  const apiKey = "";
 //   const yourSiteUrl = "<YOUR_SITE_URL>"; // Optional
 //   const yourSiteName = "<YOUR_SITE_NAME>"; // Optional
 
@@ -36,7 +47,9 @@ async function getGemmaCompletion(value) {
     }
 
     const data = await response.json();
-    return data.choices[0].message.content;
+    // console.log(data.choices[0].message.content);
+    let response_from_llm = formatLLMResponse(data.choices[0].message.content)
+    return response_from_llm;
 
   } catch (error) {
     console.error("Error fetching completion:", error);
