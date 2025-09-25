@@ -6,7 +6,7 @@ let chat_input = document.querySelector(".chat_input");
 let sendBtn = document.querySelector(".ri-send-plane-fill");
 let welcome_components = document.querySelector(".welcome_components");
 let chat_output_box = document.querySelector(".chat_output_box");
-
+let chat_history = document.querySelector(".chat_history")
 
 function formatLLMResponse(text) {
   return text
@@ -19,8 +19,8 @@ function formatLLMResponse(text) {
 
 async function getGemmaCompletion(value) {
   const apiKey = "";
-//   const yourSiteUrl = "<YOUR_SITE_URL>"; // Optional
-//   const yourSiteName = "<YOUR_SITE_NAME>"; // Optional
+  //   const yourSiteUrl = "<YOUR_SITE_URL>"; // Optional
+  //   const yourSiteName = "<YOUR_SITE_NAME>"; // Optional
 
   try {
     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
@@ -60,17 +60,29 @@ async function getGemmaCompletion(value) {
 
 
 sendBtn.addEventListener("click", async function (e) {
-    e.preventDefault();
-    let value = chat_input.value.trim();
-    if (value === "") return; // skip empty messages
-    chat_input.value = "";
+  e.preventDefault();
+  let value = chat_input.value.trim();
+  if (value === "") return; // skip empty messages
+  chat_input.value = "";
 
-    if (window.getComputedStyle(welcome_components).display == "flex") {
+  if (window.getComputedStyle(welcome_components).display == "flex") {
+    gsap.to(welcome_components, {
+      duration: 0.3,
+      opacity: 0,
+      onComplete: () => {
         welcome_components.style.display = "none";
-    }
+      }
+    });
+    chat_history.insertAdjacentHTML("beforeend", `
+      <div class="chat_history_component">
+          <img src="assets/Vector.svg" alt="" />
+              <p>${value}</p>
+      </div>
+    `)
+  }
 
-    // 1️⃣ Add user message immediately
-    chat_output_box.insertAdjacentHTML("beforeend", `
+  // Add user message immediately
+  chat_output_box.insertAdjacentHTML("beforeend", `
         <div class="inputAndResponse">
             <div class="inputAndResponse_input">
                 <div class="user_input"><p>${value}</p></div>
@@ -79,8 +91,8 @@ sendBtn.addEventListener("click", async function (e) {
         </div>
     `);
 
-    // 2️⃣ Add AI thinking placeholder
-    chat_output_box.insertAdjacentHTML("beforeend", `
+  // Add AI thinking placeholder
+  chat_output_box.insertAdjacentHTML("beforeend", `
         <div class="inputAndResponse">
             <div class="inputAndResponse_response">
                 <div class="logo"></div>
@@ -89,28 +101,28 @@ sendBtn.addEventListener("click", async function (e) {
         </div>
     `);
 
-    chat_output_box.scrollTop = chat_output_box.scrollHeight;
+  // chat_output_box.scrollTop = chat_output_box.scrollHeight;
 
-    // 3️⃣ Fetch actual AI response
-    const thinkingDiv = chat_output_box.querySelector(".ai_response.thinking");
-    const aiResponse = await getGemmaCompletion(value);
+  //  Fetch actual AI response
+  const thinkingDiv = chat_output_box.querySelector(".ai_response.thinking");
+  const aiResponse = await getGemmaCompletion(value);
 
-    // 4️⃣ Replace placeholder with real response
-    thinkingDiv.innerHTML = `
+  // Replace placeholder with real response
+  thinkingDiv.innerHTML = `
         <p>${aiResponse}</p>
         <div class="farmer_feedback">
             <i class="ri-thumb-up-fill"></i>
             <i class="ri-thumb-down-fill"></i>
         </div>
     `;
-    thinkingDiv.classList.remove("thinking");
-    chat_output_box.scrollTop = chat_output_box.scrollHeight;
+  thinkingDiv.classList.remove("thinking");
+  chat_output_box.scrollTop = chat_output_box.scrollHeight;
 });
 
 
-chat_input.addEventListener("keydown", function(e) {
-    if (e.key === "Enter" && !e.shiftKey) {  // ignore Shift+Enter (for new lines)
-        e.preventDefault(); // prevent default form submission / new line
-        sendBtn.click();    // trigger the send button click
-    }
+chat_input.addEventListener("keydown", function (e) {
+  if (e.key === "Enter" && !e.shiftKey) {  // ignore Shift+Enter (for new lines)
+    e.preventDefault(); // prevent default form submission / new line
+    sendBtn.click();    // trigger the send button click
+  }
 });
