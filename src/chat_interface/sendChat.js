@@ -18,7 +18,7 @@ function formatLLMResponse(text) {
 
 
 async function getGemmaCompletion(value) {
-  const apiKey = "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";
+  const apiKey = "";
   //   const yourSiteUrl = "<YOUR_SITE_URL>"; // Optional
   //   const yourSiteName = "<YOUR_SITE_NAME>"; // Optional
 
