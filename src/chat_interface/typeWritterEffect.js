@@ -83,3 +83,39 @@ new_chat.addEventListener("click", function (e) {
         opacity: 1
     });
 });
+
+
+// microphone animation
+
+let micBtn = document.querySelector(".ri-mic-2-line");
+
+micBtn.addEventListener("click", function() {
+    gsap.to(micBtn, {
+        scale: 1.2,
+        color: "#E53935", // Red color
+        duration: 0.4,
+        ease: "elastic.out(1, 0.3)", // This creates the bounce
+        onComplete: () => {
+            // Return to original state
+            gsap.to(micBtn, { scale: 1, color: "#39462C" });
+        }
+    });
+});
+
+
+// --- Image Button Animation ---
+
+let imageBtn = document.querySelector(".ri-image-ai-line");
+
+imageBtn.addEventListener("click", function() {
+    const imageTl = gsap.timeline();
+    imageTl.to(imageBtn, {
+        scale: 1.2,
+        duration: 0.1,
+        ease: "power2.inOut"
+    }).to(imageBtn, {
+        scale: 1,
+        duration: 0.1,
+        ease: "power2.inOut"
+    });
+});
