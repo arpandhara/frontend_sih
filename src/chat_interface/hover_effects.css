@@ -1,0 +1,23 @@
+.link_to_subsidies , .link_to_pesticides , .link_to_weather , .q{
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.link_to_subsidies:hover , .link_to_pesticides:hover , .link_to_weather:hover , .q:hover{
+    scale: 1.04;
+    background-color: #f6e3ca;
+}
+
+.ri-image-ai-line , .ri-mic-2-line , .ri-send-plane-fill{
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.ri-image-ai-line:hover , .ri-send-plane-fill:hover , .ri-mic-2-line:hover{
+    background-color: #39462C;
+    color: #f6e3ca;
+}
+
+.new_chat{
+    cursor: pointer;
+}

@@ -1,7 +1,8 @@
 let new_chat = document.querySelector(".new_chat");
 
 new_chat.addEventListener("click", function (e) {
-    chat_output_box.innerHTML = "";
+    const chatMessages = chat_output_box.querySelectorAll('.inputAndResponse');
+    chatMessages.forEach(message => message.remove());
     chat_input.value = "";
 
     welcome_components.style.display = "flex";
