@@ -8,10 +8,10 @@
     background-color: #f6e3ca;
 }
 
-.ri-image-ai-line , .ri-mic-2-line , .ri-send-plane-fill{
+/* .ri-image-ai-line , .ri-mic-2-line , .ri-send-plane-fill{
     transition: all 0.3s ease-in-out;
     cursor: pointer;
-}
+} */
 
 /* .ri-image-ai-line:hover , .ri-send-plane-fill:hover , .ri-mic-2-line:hover{
     background-color: #39462C;

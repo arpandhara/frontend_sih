@@ -72,50 +72,113 @@ new_chat.addEventListener("click", function (e) {
     });
 
 
-    const chatMessages = chat_output_box.querySelectorAll('.inputAndResponse');
-    chatMessages.forEach(message => message.remove());
-    chat_input.value = "";
+    // const chatMessages = chat_output_box.querySelectorAll('.inputAndResponse');
+    // chatMessages.forEach(message => message.remove());
+    // chat_input.value = "";
 
-    welcome_components.style.display = "flex";
-    welcome_components.style.opacity = 0;
-    gsap.to(welcome_components, {
-        duration: 0.3,
-        opacity: 1
-    });
+    // welcome_components.style.display = "flex";
+    // welcome_components.style.opacity = 0;
+    // gsap.to(welcome_components, {
+    //     duration: 0.3,
+    //     opacity: 1
+    // });
 });
 
 
 // microphone animation
 
 let micBtn = document.querySelector(".ri-mic-2-line");
+const micOnSound = document.getElementById("micOnSound");
+const micOffSound = document.getElementById("micOffSound");
 
-micBtn.addEventListener("click", function() {
-    gsap.to(micBtn, {
+micBtn.addEventListener("mousedown", function() {
+    micOnSound.play();
+    // Animation to activate the mic
+    const tl = gsap.timeline();
+
+    tl.to(micBtn, {
         scale: 1.2,
-        color: "#E53935", // Red color
-        duration: 0.4,
-        ease: "elastic.out(1, 0.3)", // This creates the bounce
-        onComplete: () => {
-            // Return to original state
-            gsap.to(micBtn, { scale: 1, color: "#39462C" });
-        }
+        duration: 0.15,
+        ease: "power2.inOut",
+        yoyo: true,
+        repeat: 2
+    }).to(micBtn, {
+        scale: 1, // Ensure it returns to normal scale
+        backgroundColor: "#F08080",
+        color: "#FFFFFF",
+        duration: 0.2
     });
 });
+
+micBtn.addEventListener("mouseup", function() {
+    micOffSound.play();
+    // Animation to deactivate the mic
+    const tl = gsap.timeline();
+
+    tl.to(micBtn, {
+        scale: 1.2,
+        duration: 0.15,
+        ease: "power2.inOut"
+    }).to(micBtn, {
+        scale: 1,
+        backgroundColor: "transparent",
+        color: "#39462C",
+        duration: 0.3
+    });
+});
+
+
+
 
 
 // --- Image Button Animation ---
 
 let imageBtn = document.querySelector(".ri-image-ai-line");
+let isImageActive = false;
+let isImageAnimating = false;
 
 imageBtn.addEventListener("click", function() {
-    const imageTl = gsap.timeline();
-    imageTl.to(imageBtn, {
-        scale: 1.2,
-        duration: 0.1,
-        ease: "power2.inOut"
-    }).to(imageBtn, {
-        scale: 1,
-        duration: 0.1,
-        ease: "power2.inOut"
-    });
+    if (isImageAnimating) {
+        return; // Don't allow animation to be re-triggered
+    }
+
+    isImageAnimating = true;
+
+    if (!isImageActive) {
+        // Animation to activate the image button
+        const imageTl = gsap.timeline({
+            onComplete: () => {
+                isImageActive = true;
+                isImageAnimating = false;
+            }
+        });
+
+        imageTl.to(imageBtn, {
+            rotation: 360,
+            backgroundColor: "#39462C", // Orange background
+            color: "#FFFFFF", // White icon
+            duration: 0.5,
+            ease: "power2.inOut"
+        });
+    } else {
+        // Animation to deactivate the image button
+        const imageTl = gsap.timeline({
+            onComplete: () => {
+                isImageActive = false;
+                isImageAnimating = false;
+            }
+        });
+
+        imageTl.to(imageBtn, {
+            rotation: 0,
+            backgroundColor: "transparent",
+            color: "#39462C", // Original color
+            duration: 0.5,
+            ease: "power2.inOut"
+        });
+    }
 });
+
+
+
+

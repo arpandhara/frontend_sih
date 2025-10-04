@@ -19,7 +19,8 @@ main {
     height: 100vh;
     width: 100vw;
     background-color: #FAF1E4;
-    display: flex
+    display: flex;
+    overflow: hidden;
 }
 
 .left {
