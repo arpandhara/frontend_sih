@@ -41,11 +41,12 @@ words.forEach(word => {
 
 
 
-function cameraDiscontinue(){
+function cameraDiscontinue() {
     const imageTl = gsap.timeline({
         onComplete: () => {
             isImageActive = false;
             isImageAnimating = false;
+            camera_options.style.display = "none";
         }
     });
 
@@ -76,11 +77,11 @@ const micOffSound = document.getElementById("micOffSound");
 
 micBtn.addEventListener("mousedown", function () {
     micOnSound.play();
-    
-    
+
+
     cameraDiscontinue();
-    
-    
+
+
     // Animation to activate the mic
     const tl = gsap.timeline();
 
@@ -169,7 +170,6 @@ imageBtn.addEventListener("click", function () {
     } else {
         // Animation to deactivate the image button
         cameraDiscontinue();
-        // camera_options.style.display = "none";
     }
 });
 

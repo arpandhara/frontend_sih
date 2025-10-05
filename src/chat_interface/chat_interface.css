@@ -508,7 +508,7 @@ main {
 }
 
 .camera_options{
-    position: absolute;
+    position: fixed;
     height: 25%;
     width: 20%;
     /* background-color: rebeccapurple; */
@@ -519,6 +519,7 @@ main {
     display:  flex;
     flex-direction: column;
     gap: 1vw;
+    margin-bottom: 2vw;
     display: none;
 }
 
@@ -576,4 +577,33 @@ main {
     object-position: center;
     border-radius: 15px;
     margin-bottom: .5vw;
+}
+
+.camera_view {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    z-index: 10;
+}
+
+#camera_stream {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.take_photo_btn {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    background-color: #435334;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }

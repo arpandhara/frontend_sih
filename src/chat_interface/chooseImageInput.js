@@ -5,18 +5,57 @@ let imagePreviewCoverer = document.querySelector(".imagePreviewCoverer");
 let crossButtonForImagePreview = document.querySelector(".ri-close-large-line");
 let isImage = false;
 let actualImage;
-chooseFromGallery.addEventListener("click" , function(e){
+
+
+let openCamera = document.querySelector(".open_camera");
+let cameraView = document.querySelector(".camera_view");
+let video = document.getElementById("camera_stream");
+let takePhotoButton = document.querySelector(".take_photo_btn");
+let canvas = document.getElementById("canvas");
+
+chooseFromGallery.addEventListener("click", function (e) {
     fileInput.click();
     cameraDiscontinue();
 })
 
+
+openCamera.addEventListener("click", async function () {
+    cameraView.style.display = "block";
+    cameraDiscontinue();
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        video.srcObject = stream;
+    } catch (err) {
+        console.error("Error accessing camera: ", err);
+    }
+});
+
+// Event listener to take the photo
+takePhotoButton.addEventListener("click", function () {
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    canvas.getContext('2d').drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+    actualImage = canvas.toDataURL('image/png');
+    imagePreviewCoverer.style.display = "flex";
+    imgPreview.style.backgroundImage = `url(${actualImage})`;
+    isImage = true;
+
+    // Stop the camera stream and hide the camera view
+    const stream = video.srcObject;
+    const tracks = stream.getTracks();
+    tracks.forEach(track => track.stop());
+    video.srcObject = null;
+    cameraView.style.display = "none";
+});
+
+
 fileInput.addEventListener("change", (e) => {
     const files = e.target.files[0];
 
-    if(files){
+    if (files) {
         const reader = new FileReader();
 
-        reader.onload = function(e){
+        reader.onload = function (e) {
             actualImage = e.target.result;
             imagePreviewCoverer.style.display = "flex";
             imgPreview.style.backgroundImage = `url(${actualImage})`;
@@ -27,7 +66,7 @@ fileInput.addEventListener("change", (e) => {
     }
 })
 
-crossButtonForImagePreview.addEventListener("click" , ()=>{
+crossButtonForImagePreview.addEventListener("click", () => {
     imagePreviewCoverer.style.display = "none";
     isImage = false;
 })

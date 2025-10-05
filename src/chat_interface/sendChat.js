@@ -67,6 +67,11 @@ sendBtn.addEventListener("click", async function (e) {
   if(!isImage) if (value === "") return; // skip empty messages
   chat_input.value = "";
 
+  let chat_historyValue;
+
+  if(value === "") chat_historyValue = "a photo or recording was uploaded";
+  else chat_historyValue = value;
+
   cameraDiscontinue();
 
   if (window.getComputedStyle(welcome_components).display == "flex") {
@@ -80,7 +85,7 @@ sendBtn.addEventListener("click", async function (e) {
     chat_history.insertAdjacentHTML("beforeend", `
       <div class="chat_history_component">
           <img src="assets/Vector.svg" alt="" />
-              <p>${value}</p>
+              <p>${chat_historyValue}</p>
       </div>
     `)
   }
@@ -100,6 +105,7 @@ sendBtn.addEventListener("click", async function (e) {
       `);
     
     imagePreviewCoverer.style.display = "none";
+    isImage = false;
     
     } else {
       chat_output_box.insertAdjacentHTML("beforeend", `

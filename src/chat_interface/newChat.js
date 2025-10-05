@@ -2,6 +2,7 @@ let new_chat = document.querySelector(".new_chat");
 let new_chat_icon = document.querySelector(".new_chat img");
 
 new_chat.addEventListener("click", function (e) {
+    crossButtonForImagePreview.click();
     const chatMessages = chat_output_box.querySelectorAll('.inputAndResponse');
     chatMessages.forEach(message => message.remove());
     chat_input.value = "";
