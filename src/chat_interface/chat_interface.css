@@ -507,3 +507,27 @@ main {
     color: rgb(95, 94, 94);
 }
 
+.camera_options{
+    position: absolute;
+    height: 25%;
+    width: 20%;
+    /* background-color: rebeccapurple; */
+    bottom: 0;
+    right: 0;
+    padding: 1vw;
+    /* border: 1px solid black; */
+    display:  flex;
+    flex-direction: column;
+    gap: 1vw;
+    display: none;
+}
+
+.choose_from_gallery , .open_camera{
+    background-color: #39462C;
+    text-decoration: none;
+    border: none;
+    padding: 1vw .5vw;
+    border-radius: 30px;
+    color: #FAF1E4;
+    cursor: pointer;
+}

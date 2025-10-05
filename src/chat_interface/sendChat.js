@@ -65,6 +65,8 @@ sendBtn.addEventListener("click", async function (e) {
   if (value === "") return; // skip empty messages
   chat_input.value = "";
 
+  cameraDiscontinue();
+
   if (window.getComputedStyle(welcome_components).display == "flex") {
     gsap.to(welcome_components, {
       duration: 0.3,
@@ -122,6 +124,7 @@ sendBtn.addEventListener("click", async function (e) {
 
 chat_input.addEventListener("keydown", function (e) {
   if (e.key === "Enter" && !e.shiftKey) {  // ignore Shift+Enter (for new lines)
+    cameraDiscontinue();
     e.preventDefault(); // prevent default form submission / new line
     sendBtn.click();    // trigger the send button click
   }
