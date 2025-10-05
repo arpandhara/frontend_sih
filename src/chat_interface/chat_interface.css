@@ -482,21 +482,21 @@ main {
 }
 
 .link_to_pesticides .img_div{
-    background-image: url(assets/pexels-dinukagunawardana-17903068.jpg);
+    background-image: url(assets/pexels-dinukagunawardana-17903068.webp);
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
 }
 
 .link_to_subsidies .img_div{
-    background-image: url(assets/13e4bdc5b07b42c75a54c6484beb0524.jpg);
+    background-image: url(assets/13e4bdc5b07b42c75a54c6484beb0524.webp);
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
 }
 
 .link_to_weather .img_div{
-    background-image: url(assets/d5491c568a1d75afd7799148a59da434.jpg);
+    background-image: url(assets/d5491c568a1d75afd7799148a59da434.webp);
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -530,4 +530,50 @@ main {
     border-radius: 30px;
     color: #FAF1E4;
     cursor: pointer;
+}
+
+.imagePreviewCoverer{
+    position: absolute;
+    height: 35%;
+    width: 20%;
+    bottom: 0;
+    left: 0;
+    /* background-color: #39462C; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1vw 1vw 0vw 1vw;
+    display: none;
+}
+
+.imagePreview{
+    height: 100%;
+    width: 100%;
+    /* background-color: black; */
+    border-radius: 30px;
+    position: relative;
+    background-image: url();
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: 1px solid black;
+}
+
+.ri-close-large-line{
+    position: absolute;
+    right: 0;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.chat_image_preview{
+    background-color: black;
+    height: 8vw;
+    width: 8vw;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 15px;
+    margin-bottom: .5vw;
 }

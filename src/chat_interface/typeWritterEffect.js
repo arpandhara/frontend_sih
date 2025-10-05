@@ -127,6 +127,7 @@ let isImageAnimating = false;
 let camera_options = document.querySelector(".camera_options");
 let buttons = document.querySelectorAll(".camera_options button");
 
+
 imageBtn.addEventListener("click", function () {
     if (isImageAnimating) {
         return; // Don't allow animation to be re-triggered

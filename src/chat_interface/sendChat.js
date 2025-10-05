@@ -6,7 +6,9 @@ let chat_input = document.querySelector(".chat_input");
 let sendBtn = document.querySelector(".ri-send-plane-fill");
 let welcome_components = document.querySelector(".welcome_components");
 let chat_output_box = document.querySelector(".chat_output_box");
-let chat_history = document.querySelector(".chat_history")
+let chat_history = document.querySelector(".chat_history");
+let chat_image_preview = document.querySelector(".chat_image_preview")
+
 
 function formatLLMResponse(text) {
   return text
@@ -62,7 +64,7 @@ async function getGemmaCompletion(value) {
 sendBtn.addEventListener("click", async function (e) {
   e.preventDefault();
   let value = chat_input.value.trim();
-  if (value === "") return; // skip empty messages
+  if(!isImage) if (value === "") return; // skip empty messages
   chat_input.value = "";
 
   cameraDiscontinue();
@@ -82,17 +84,34 @@ sendBtn.addEventListener("click", async function (e) {
       </div>
     `)
   }
-
+  
   // Add user message immediately
-  chat_output_box.insertAdjacentHTML("beforeend", `
+  if (isImage) {
+    chat_output_box.insertAdjacentHTML("beforeend", `
+      <div class="inputAndResponse">
+      <div class="inputAndResponse_input">
+      <div class="user_input">
+      <img class="chat_image_preview" src="${actualImage}">
+      <p>${value}</p>
+      </div>
+      <div class="user_profile_pic"></div>
+      </div>
+      </div>
+      `);
+    
+    imagePreviewCoverer.style.display = "none";
+    
+    } else {
+      chat_output_box.insertAdjacentHTML("beforeend", `
         <div class="inputAndResponse">
-            <div class="inputAndResponse_input">
-                <div class="user_input"><p>${value}</p></div>
-                <div class="user_profile_pic"></div>
-            </div>
+        <div class="inputAndResponse_input">
+        <div class="user_input"><p>${value}</p></div>
+        <div class="user_profile_pic"></div>
         </div>
-    `);
-
+        </div>
+        `);
+      }
+      
   // Add AI thinking placeholder
   chat_output_box.insertAdjacentHTML("beforeend", `
         <div class="inputAndResponse">
