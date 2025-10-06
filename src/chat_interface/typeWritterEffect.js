@@ -144,175 +144,161 @@ function cameraDiscontinue() {
 
 
 
-
-
-
-
-
-
 let micBtn = document.querySelector(".ri-mic-2-line");
 const micOnSound = document.getElementById("micOnSound");
 const micOffSound = document.getElementById("micOffSound");
+const chatInput = document.querySelector(".chat_input");
+const visualizer = document.querySelector(".voice-visualizer");
+const visualizerBars = document.querySelectorAll(".voice-visualizer .bar");
 
-const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+let mediaRecorder;
+let audioChunks = [];
+let isRecording = false;
 
-if (SpeechRecognition) {
-  const recognition = new SpeechRecognition();
-  let isRecording = false;
-  let lastTranscript = ''; // store last received transcript for troubleshooting
-  recognition.maxAlternatives = 5;
+// For visualizer
+let audioContext;
+let analyser;
+let dataArray;
+let source;
+let animationFrameId;
 
-  // --- Configuration ---
-  recognition.continuous = false; // Stop recognition when the user stops speaking
-  recognition.interimResults = true; // Enable interim results to get faster feedback (helps debugging)
-  recognition.lang = 'en-US';
-
-  // --- Animation and Recording Functions ---
-  const startRecording = () => {
+micBtn.addEventListener("mousedown", async function () {
     if (!isRecording) {
-      isRecording = true;
-      micOffSound.pause();
-      micOffSound.currentTime = 0;
-      micOnSound.play();
-
-      try {
-        recognition.start();
-      } catch(e) {
-        console.error("Error starting recognition:", e);
-        isRecording = false; // Reset state
-        return;
-      }
-
-      // Start animation
-      const tl = gsap.timeline();
-      tl.to(micBtn, {
-        scale: 1.2,
-        duration: 0.15,
-        ease: "power2.inOut",
-      }).to(micBtn, {
-        scale: 1,
-        backgroundColor: "#F08080",
-        color: "#FFFFFF",
-        duration: 0.2,
-      });
-    }
-  };
-
-  const stopRecording = () => {
-    if (isRecording) {
-      isRecording = false;
-      micOnSound.pause();
-      micOnSound.currentTime = 0;
-      micOffSound.play();
-      // Delay stopping slightly to give the recognizer time to deliver the final result
-      // (Some browser implementations may not fire onresult if stop() is called too quickly)
-      // Increase delay to give recognizer more time to produce final result
-      setTimeout(() => {
         try {
-          recognition.stop();
-        } catch (e) {
-          console.warn('Error calling recognition.stop():', e);
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            mediaRecorder = new MediaRecorder(stream);
+            
+            // --- Visualizer Setup ---
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            analyser = audioContext.createAnalyser();
+            analyser.fftSize = 256;
+            source = audioContext.createMediaStreamSource(stream);
+            source.connect(analyser);
+            const bufferLength = analyser.frequencyBinCount;
+            dataArray = new Uint8Array(bufferLength);
+            // --- End Visualizer Setup ---
+
+
+            audioChunks = []; // Reset chunks for a new recording
+            mediaRecorder.ondataavailable = event => {
+                audioChunks.push(event.data);
+            };
+            mediaRecorder.onstop = () => {
+                const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                const audioUrl = URL.createObjectURL(audioBlob);
+
+                const welcome_components = document.querySelector(".welcome_components");
+                if (window.getComputedStyle(welcome_components).display === "flex") {
+                    gsap.to(welcome_components, {
+                        duration: 0.3,
+                        opacity: 0,
+                        onComplete: () => {
+                            welcome_components.style.display = "none";
+                        }
+                    });
+                }
+
+                const chat_output_box = document.querySelector(".chat_output_box");
+                chat_output_box.insertAdjacentHTML("beforeend", `
+                    <div class="inputAndResponse">
+                        <div class="inputAndResponse_input">
+                            <div class="user_input">
+                                <audio controls src="${audioUrl}"></audio>
+                            </div>
+                            <div class="user_profile_pic"></div>
+                        </div>
+                    </div>
+                `);
+                chat_output_box.scrollTop = chat_output_box.scrollHeight;
+
+                 // Clean up audio context
+                stream.getTracks().forEach(track => track.stop());
+                if (audioContext.state !== 'closed') {
+                    audioContext.close();
+                }
+            };
+
+            mediaRecorder.start();
+            isRecording = true;
+            
+            // Show visualizer and hide input
+            chatInput.classList.add("recording");
+            visualizer.style.display = "flex";
+            drawVisualizer();
+
+
+            micOffSound.pause();
+            micOffSound.currentTime = 0;
+            micOnSound.play();
+
+            const tl = gsap.timeline();
+            tl.to(micBtn, {
+                scale: 1.2,
+                duration: 0.15,
+                ease: "power2.inOut",
+            }).to(micBtn, {
+                scale: 1,
+                backgroundColor: "#F08080",
+                color: "#FFFFFF",
+                duration: 0.2,
+            });
+
+        } catch (err) {
+            console.error("Error accessing microphone:", err);
+            // You can add a user-facing error message here
         }
-      }, 700);
-
-      // Reverse animation
-      const tl = gsap.timeline();
-      tl.to(micBtn, {
-        scale: 1.2,
-        duration: 0.15,
-        ease: "power2.inOut",
-      }).to(micBtn, {
-        scale: 1,
-        backgroundColor: "transparent",
-        color: "#39462C",
-        duration: 0.3,
-      });
     }
-  };
+});
 
-  // --- Event Listeners ---
-  micBtn.addEventListener("mousedown", startRecording);
-  micBtn.addEventListener("mouseup", stopRecording);
-  micBtn.addEventListener("mouseleave", () => {
+function stopRecordingAndSend() {
     if (isRecording) {
-      stopRecording();
+        mediaRecorder.stop();
+        isRecording = false;
+
+        // Hide visualizer and show input
+        chatInput.classList.remove("recording");
+        visualizer.style.display = "none";
+        cancelAnimationFrame(animationFrameId);
+
+
+        micOnSound.pause();
+        micOnSound.currentTime = 0;
+        micOffSound.play();
+        const tl = gsap.timeline();
+        tl.to(micBtn, {
+            scale: 1.2,
+            duration: 0.15,
+            ease: "power2.inOut",
+        }).to(micBtn, {
+            scale: 1,
+            backgroundColor: "transparent",
+            color: "#39462C",
+            duration: 0.3,
+        });
     }
-  });
-
-  // --- Speech Recognition Event Handlers ---
-  recognition.onstart = () => {
-    console.log("Voice recognition activated. Start speaking.");
-  };
-
-  // Additional debug events to trace what's happening with the recognizer
-  recognition.onaudiostart = () => console.log('Audio capturing started.');
-  recognition.onaudioend = () => console.log('Audio capturing ended.');
-  recognition.onspeechstart = () => console.log('Speech has been detected.');
-  recognition.onspeechend = () => console.log('Speech has stopped being detected.');
-  recognition.onnomatch = (e) => console.warn('No matching speech recognized.', e);
-
-  recognition.onresult = (event) => {
-    // dump the full event for debugging
-    try { console.log('onresult full event:', event); } catch(e) { /* some browsers can't stringify */ }
-    // Combine results (handles interim + final) into a single transcript string
-    let transcript = '';
-    for (let i = event.resultIndex; i < event.results.length; i++) {
-      transcript += event.results[i][0].transcript;
-      if (event.results[i].isFinal) break; // stop at the first final result
-    }
-
-  console.log('onresult event, resultIndex=', event.resultIndex, 'isFinal=', event.results[event.results.length-1].isFinal);
-  console.log("Transcript received (combined):", transcript);
-
-  // save for onend logging/debug
-  lastTranscript = transcript;
-
-    if (transcript && transcript.trim().length > 0) {
-      // Query DOM elements here to avoid relying on variables from other scripts
-      const chatInputEl = document.querySelector('.chat_input');
-      const sendButtonEl = document.querySelector('.ri-send-plane-fill');
-
-      if (chatInputEl) chatInputEl.value = transcript;
-      else console.warn('chat_input element not found when setting transcript.');
-
-      if (sendButtonEl) {
-        // Give the UI a tiny moment to update before triggering click
-        setTimeout(() => sendButtonEl.click(), 50);
-      } else {
-        console.warn('sendBtn element not found when trying to click send.');
-      }
-    }
-  };
-
-  recognition.onend = () => {
-    // Ensure the UI is always reset when recognition stops
-    console.log('recognition.onend fired. lastTranscript:', lastTranscript ? lastTranscript : '<none>');
-    // if recognition ended but we still think we're recording, clean up UI
-    if (isRecording) {
-      stopRecording();
-    }
-    // clear lastTranscript after a short time to avoid stale values
-    setTimeout(() => { lastTranscript = ''; }, 1000);
-  };
-
-  recognition.onerror = (event) => {
-    console.error("Speech recognition error:", event.error);
-    try { console.error('onerror full event:', event); } catch(e) {}
-     if (event.error === 'no-speech') {
-        console.warn("No speech was detected.");
-    } else if (event.error === 'not-allowed') {
-        console.error("Microphone access was denied. Please allow microphone access in your browser settings.");
-    }
-    // Clean up on error
-    if (isRecording) {
-      stopRecording();
-    }
-  };
-
-} else {
-  console.error("Speech Recognition is not supported by this browser.");
-  micBtn.style.display = "none";
 }
+
+function drawVisualizer() {
+    animationFrameId = requestAnimationFrame(drawVisualizer);
+    analyser.getByteFrequencyData(dataArray);
+
+    const barCount = visualizerBars.length;
+    const step = Math.floor(dataArray.length / barCount);
+
+    for (let i = 0; i < barCount; i++) {
+        let barHeight = dataArray[i * step];
+        const heightPercentage = (barHeight / 255) * 100;
+        visualizerBars[i].style.height = `${Math.max(10, heightPercentage)}%`; // Ensure a minimum height
+    }
+}
+
+
+micBtn.addEventListener("mouseup", stopRecordingAndSend);
+micBtn.addEventListener("mouseleave", () => {
+    if (isRecording) {
+        stopRecordingAndSend();
+    }
+});
 
 
 // --- Image Button Animation ---

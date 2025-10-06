@@ -620,3 +620,91 @@ main {
     border-radius: 5px;
     cursor: pointer;
 }
+
+
+
+.user_input audio, .ai_response audio {
+    border-radius: 50px;
+}
+
+/* Main control panel */
+audio::-webkit-media-controls-panel {
+    background-color: #eabf79;
+    border-radius: 50px;
+}
+
+/* Play button */
+audio::-webkit-media-controls-play-button {
+    background-color: #cdffa1;
+    color: white;
+    border-radius: 50%;
+    margin-right: 15px;
+    margin-left: 5px;
+}
+
+/* Mute button */
+audio::-webkit-media-controls-mute-button {
+    background-color: #cdffa1;
+    color: white;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+/* Timeline track */
+audio::-webkit-media-controls-timeline {
+    background-color: #000000;
+    border-radius: 25px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 0;
+    height: 8px;
+}
+
+/* Hide the volume slider for a cleaner look */
+audio::-webkit-media-controls-volume-slider {
+    display: none;
+}
+
+/* Text for time */
+audio::-webkit-media-controls-current-time-display,
+audio::-webkit-media-controls-time-remaining-display {
+    color: #000000;
+    font-weight: bold;
+    font-size: 14px;
+    text-shadow: none;
+}
+
+
+/* Voice Visualizer Styles */
+.voice-visualizer {
+    position: absolute;
+    left: 4vw; /* Adjusted to be next to add icon */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 75%; /* Takes up most of the input area */
+    height: calc(100% - 2vw);
+    background-color: #D6BC97;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4vw;
+    padding: 0 1vw;
+    display: none; /* Initially hidden */
+    z-index: 2;
+}
+
+.voice-visualizer .bar {
+    width: 0.5vw;
+    height: 10%; /* Start small */
+    max-height: 90%;
+    background-color: #435334;
+    border-radius: 5px;
+    transition: height 0.1s ease-out;
+}
+
+
+
+.welcome_components{
+    display: none;
+}

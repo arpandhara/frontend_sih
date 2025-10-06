@@ -116,7 +116,18 @@ sendBtn.addEventListener("click", async function (e) {
     imagePreviewCoverer.style.display = "none";
     isImage = false;
     
-    } else {
+    // }else if(isRecording){
+    //   chat_output_box.insertAdjacentHTML("beforeend", `
+    //     <div class="inputAndResponse">
+    //     <div class="inputAndResponse_input">
+    //     <div class="user_input"><audio src="${audioUrl}" controls></audio></div>
+    //     <div class="user_profile_pic"></div>
+    //     </div>
+    //     </div>
+    //     `);
+
+    //     isRecording = false;
+    }else {
       chat_output_box.insertAdjacentHTML("beforeend", `
         <div class="inputAndResponse">
         <div class="inputAndResponse_input">
