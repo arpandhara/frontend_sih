@@ -72,84 +72,13 @@ function cameraDiscontinue() {
 // microphone animation
 
 
-
-
-
-
-// microphone animation
-
-// let micBtn = document.querySelector(".ri-mic-2-line");
-// const micOnSound = document.getElementById("micOnSound");
-// const micOffSound = document.getElementById("micOffSound");
-// let isRecording = false;
-
-// micBtn.addEventListener("mousedown", function () {
-//     isRecording = true;
-//     micOffSound.pause();
-//     micOffSound.currentTime = 0;
-//     micOnSound.play();
-
-
-//     cameraDiscontinue();
-
-
-//     // Animation to activate the mic
-//     const tl = gsap.timeline();
-
-//     tl.to(micBtn, {
-//         scale: 1.2,
-//         duration: 0.15,
-//         ease: "power2.inOut",
-//         // yoyo: true,
-//         // repeat: 2
-//     }).to(micBtn, {
-//         scale: 1, // Ensure it returns to normal scale
-//         backgroundColor: "#F08080",
-//         color: "#FFFFFF",
-//         duration: 0.2
-//     });
-// });
-
-// function recordingOff(){
-//     micOnSound.pause();
-//     micOnSound.currentTime = 0;
-//     micOffSound.play();
-//     // Animation to deactivate the mic
-//     const tl = gsap.timeline();
-
-//     tl.to(micBtn, {
-//         scale: 1.2,
-//         duration: 0.15,
-//         ease: "power2.inOut"
-//     }).to(micBtn, {
-//         scale: 1,
-//         backgroundColor: "transparent",
-//         color: "#39462C",
-//         duration: 0.3
-//     });
-//     isRecording = false;
-// }
-
-// micBtn.addEventListener("mouseup", function () {
-//     recordingOff();
-// });
-
-
-// micBtn.addEventListener("mouseleave", function () {
-//     if(isRecording) recordingOff();
-// });
-
-
-
-
-
-
 let micBtn = document.querySelector(".ri-mic-2-line");
 const micOnSound = document.getElementById("micOnSound");
 const micOffSound = document.getElementById("micOffSound");
 const chatInput = document.querySelector(".chat_input");
 const visualizer = document.querySelector(".voice-visualizer");
 const visualizerBars = document.querySelectorAll(".voice-visualizer .bar");
+let audioUrl;
 
 let mediaRecorder;
 let audioChunks = [];
@@ -185,7 +114,7 @@ micBtn.addEventListener("mousedown", async function () {
             };
             mediaRecorder.onstop = () => {
                 const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
-                const audioUrl = URL.createObjectURL(audioBlob);
+                audioUrl = URL.createObjectURL(audioBlob);
 
                 const welcome_components = document.querySelector(".welcome_components");
                 if (window.getComputedStyle(welcome_components).display === "flex") {
@@ -197,19 +126,6 @@ micBtn.addEventListener("mousedown", async function () {
                         }
                     });
                 }
-
-                const chat_output_box = document.querySelector(".chat_output_box");
-                chat_output_box.insertAdjacentHTML("beforeend", `
-                    <div class="inputAndResponse">
-                        <div class="inputAndResponse_input">
-                            <div class="user_input">
-                                <audio controls src="${audioUrl}"></audio>
-                            </div>
-                            <div class="user_profile_pic"></div>
-                        </div>
-                    </div>
-                `);
-                chat_output_box.scrollTop = chat_output_box.scrollHeight;
 
                  // Clean up audio context
                 stream.getTracks().forEach(track => track.stop());
@@ -253,7 +169,8 @@ micBtn.addEventListener("mousedown", async function () {
 function stopRecordingAndSend() {
     if (isRecording) {
         mediaRecorder.stop();
-        isRecording = false;
+        sendBtn.click();
+        // isRecording = false;
 
         // Hide visualizer and show input
         chatInput.classList.remove("recording");

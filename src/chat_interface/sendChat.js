@@ -20,7 +20,7 @@ function formatLLMResponse(text) {
 
 
 async function getGemmaCompletion(value) {
-  const apiKey = "";
+  const apiKey = "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";
   //   const yourSiteUrl = "<YOUR_SITE_URL>"; // Optional
   //   const yourSiteName = "<YOUR_SITE_NAME>"; // Optional
 
@@ -63,12 +63,18 @@ async function getGemmaCompletion(value) {
 
 sendBtn.addEventListener("click", async function (e) {
   e.preventDefault();
+
+  let aiResponseAudio;
+
   let value;
   if(isPredefined) {
     value = question;
     isPredefined = false;
   }else if(isImage){
     value = chat_input.value.trim();
+  }else if(isRecording){
+    value = chat_input.value.trim();
+    value = audioUrl;
   }else{
     value = chat_input.value.trim();
     if(value === "") return;
@@ -100,6 +106,7 @@ sendBtn.addEventListener("click", async function (e) {
   }
   
   // Add user message immediately
+  console.log(isRecording)
   if (isImage) {
     chat_output_box.insertAdjacentHTML("beforeend", `
       <div class="inputAndResponse">
@@ -116,17 +123,15 @@ sendBtn.addEventListener("click", async function (e) {
     imagePreviewCoverer.style.display = "none";
     isImage = false;
     
-    // }else if(isRecording){
-    //   chat_output_box.insertAdjacentHTML("beforeend", `
-    //     <div class="inputAndResponse">
-    //     <div class="inputAndResponse_input">
-    //     <div class="user_input"><audio src="${audioUrl}" controls></audio></div>
-    //     <div class="user_profile_pic"></div>
-    //     </div>
-    //     </div>
-    //     `);
-
-    //     isRecording = false;
+    }else if(isRecording){
+      chat_output_box.insertAdjacentHTML("beforeend", `
+        <div class="inputAndResponse">
+        <div class="inputAndResponse_input">
+        <div class="user_input"><audio src="${value}" controls></audio></div>
+        <div class="user_profile_pic"></div>
+        </div>
+        </div>
+        `);
     }else {
       chat_output_box.insertAdjacentHTML("beforeend", `
         <div class="inputAndResponse">
@@ -155,15 +160,28 @@ sendBtn.addEventListener("click", async function (e) {
   const aiResponse = await getGemmaCompletion(value);
 
   // Replace placeholder with real response
-  thinkingDiv.innerHTML = `
-        <p>${aiResponse}</p>
-        <div class="farmer_feedback">
-            <i class="ri-thumb-up-fill"></i>
-            <i class="ri-thumb-down-fill"></i>
-        </div>
-    `;
-  thinkingDiv.classList.remove("thinking");
-  chat_output_box.scrollTop = chat_output_box.scrollHeight;
+  if(isRecording){
+    thinkingDiv.innerHTML = `
+          <audio src="${aiResponse}" controls></audio>
+          <div class="farmer_feedback">
+              <i class="ri-thumb-up-fill"></i>
+              <i class="ri-thumb-down-fill"></i>
+          </div>
+      `;
+    thinkingDiv.classList.remove("thinking");
+    chat_output_box.scrollTop = chat_output_box.scrollHeight;
+    isRecording = false;
+  }else{
+    thinkingDiv.innerHTML = `
+          <p>${aiResponse}</p>
+          <div class="farmer_feedback">
+              <i class="ri-thumb-up-fill"></i>
+              <i class="ri-thumb-down-fill"></i>
+          </div>
+      `;
+    thinkingDiv.classList.remove("thinking");
+    chat_output_box.scrollTop = chat_output_box.scrollHeight;
+  }
 });
 
 
