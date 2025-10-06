@@ -38,7 +38,7 @@ async function getGemmaCompletion(value) {
         "messages": [
           {
             "role": "user",
-            "content": `Provide me the answer in one line \n ${value}`,
+            "content": ` \n ${value}`,
           }
         ]
       })
@@ -63,8 +63,17 @@ async function getGemmaCompletion(value) {
 
 sendBtn.addEventListener("click", async function (e) {
   e.preventDefault();
-  let value = chat_input.value.trim();
-  if(!isImage) if (value === "") return; // skip empty messages
+  let value;
+  if(isPredefined) {
+    value = question;
+    isPredefined = false;
+  }else if(isImage){
+    value = chat_input.value.trim();
+  }else{
+    value = chat_input.value.trim();
+    if(value === "") return;
+  }
+
   chat_input.value = "";
 
   let chat_historyValue;

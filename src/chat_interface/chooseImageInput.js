@@ -3,6 +3,7 @@ let fileInput = document.querySelector("#fileInput");
 let imgPreview = document.querySelector(".imagePreview");
 let imagePreviewCoverer = document.querySelector(".imagePreviewCoverer");
 let crossButtonForImagePreview = document.querySelector(".ri-close-large-line");
+let exit_photo_btn = document.querySelector(".exit_photo_btn");
 let isImage = false;
 let actualImage;
 
@@ -29,6 +30,10 @@ openCamera.addEventListener("click", async function () {
         console.error("Error accessing camera: ", err);
     }
 });
+
+exit_photo_btn.addEventListener("click" , function(){
+    cameraView.style.display = "none";
+})
 
 // Event listener to take the photo
 takePhotoButton.addEventListener("click", function () {

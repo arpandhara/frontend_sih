@@ -74,8 +74,12 @@ function cameraDiscontinue() {
 let micBtn = document.querySelector(".ri-mic-2-line");
 const micOnSound = document.getElementById("micOnSound");
 const micOffSound = document.getElementById("micOffSound");
+let isRecording = false;
 
 micBtn.addEventListener("mousedown", function () {
+    isRecording = true;
+    micOffSound.pause();
+    micOffSound.currentTime = 0;
     micOnSound.play();
 
 
@@ -99,7 +103,9 @@ micBtn.addEventListener("mousedown", function () {
     });
 });
 
-micBtn.addEventListener("mouseup", function () {
+function recordingOff(){
+    micOnSound.pause();
+    micOnSound.currentTime = 0;
     micOffSound.play();
     // Animation to deactivate the mic
     const tl = gsap.timeline();
@@ -114,6 +120,16 @@ micBtn.addEventListener("mouseup", function () {
         color: "#39462C",
         duration: 0.3
     });
+    isRecording = false;
+}
+
+micBtn.addEventListener("mouseup", function () {
+    recordingOff();
+});
+
+
+micBtn.addEventListener("mouseleave", function () {
+    if(isRecording) recordingOff();
 });
 
 

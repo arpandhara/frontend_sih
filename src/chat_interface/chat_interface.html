@@ -141,30 +141,32 @@
 
 
 
-        <div class="camera_options">
-          <button class="choose_from_gallery">
-            <p>Choose from Gallery</p>
-          </button>
-          <button class="open_camera">
-            <p>Open Camera</p>
-          </button>
-        </div>
         <input type="file" id="fileInput" accept="image/*" style="display: none;">
 
+        <div class="camera_view" style="display: none;">
+          <video id="camera_stream" autoplay></video>
+          <div class="cover_up_for_exitAndTakePhoto">
+            <button class="take_photo_btn">Take Photo</button>
+            <button class="exit_photo_btn">Exit</button>
+          </div>
+        </div>
+        <canvas id="canvas" style="display:none;"></canvas>
+
+      </div>
+      <div class="camera_options">
+        <button class="choose_from_gallery">
+          <p>Choose from Gallery</p>
+        </button>
+        <button class="open_camera">
+          <p>Open Camera</p>
+        </button>
+      </div>
+      <div class="chat_input_box">
         <div class="imagePreviewCoverer">
           <div class="imagePreview">
             <i class="ri-close-large-line"></i>
           </div>
         </div>
-
-        <div class="camera_view" style="display: none;">
-          <video id="camera_stream" autoplay></video>
-          <button class="take_photo_btn">Take Photo</button>
-        </div>
-        <canvas id="canvas" style="display:none;"></canvas>
-
-      </div>
-      <div class="chat_input_box">
         <i class="ri-add-line"></i>
         <input type="text" placeholder="Ask Your Query" class="chat_input">
         <i class="ri-image-ai-line"></i>
@@ -185,6 +187,7 @@
   <script src="newChat.js"></script>
   <script src="typeWritterEffect.js"></script>
   <script src="chooseImageInput.js"></script>
+  <script src="sendPredefinedQuestions.js"></script>
 </body>
 
 </html>

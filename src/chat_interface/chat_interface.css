@@ -264,6 +264,7 @@ main {
     display: flex;
     align-items: center;
     gap: .5vw;
+    position: relative;
 }
 
 .chat_input{
@@ -332,7 +333,9 @@ main {
     padding: 1vw;
     border: 1px solid #BA9359;
     border-radius: 12px;
-
+    white-space: normal;
+    overflow-wrap: break-word
+    /* overflow: hidden; */
 }
 
 .user_input p , .ai_response p{
@@ -518,8 +521,9 @@ main {
     /* border: 1px solid black; */
     display:  flex;
     flex-direction: column;
+    justify-content: center;
     gap: 1vw;
-    margin-bottom: 2vw;
+    margin-bottom: 2.5vw;
     display: none;
 }
 
@@ -535,9 +539,9 @@ main {
 
 .imagePreviewCoverer{
     position: absolute;
-    height: 35%;
-    width: 20%;
-    bottom: 0;
+    height: 15vw;
+    width: 18vw;
+    top: -15vw;
     left: 0;
     /* background-color: #39462C; */
     display: flex;
@@ -580,7 +584,7 @@ main {
 }
 
 .camera_view {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
@@ -595,10 +599,19 @@ main {
     object-fit: cover;
 }
 
-.take_photo_btn {
+.cover_up_for_exitAndTakePhoto{
+    display: flex;
+    gap: 1vw;
+    height: fit-content;
+    width: fit-content;
     position: absolute;
     bottom: 20px;
     left: 50%;
+    align-items: center;
+    justify-content: center;
+}
+
+.take_photo_btn , .exit_photo_btn{
     transform: translateX(-50%);
     padding: 10px 20px;
     background-color: #435334;
