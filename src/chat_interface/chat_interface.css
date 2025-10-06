@@ -692,6 +692,7 @@ audio::-webkit-media-controls-time-remaining-display {
     padding: 0 1vw;
     display: none; /* Initially hidden */
     z-index: 2;
+    /* pointer-events: all; */
 }
 
 .voice-visualizer .bar {

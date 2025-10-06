@@ -8,13 +8,16 @@ const cursor = document.querySelector('.cursor');
 
 // --- CURSOR BLINKING ---
 // Create a blinking animation for the cursor
-gsap.to(cursor, {
-    opacity: 0,
-    ease: "power2.inOut",
-    repeat: -1,
-    yoyo: true, // Makes the animation reverse, creating the blink
-    duration: 0.4
-});
+if (cursor) {
+    gsap.to(cursor, {
+        opacity: 0,
+        ease: "power2.inOut",
+        repeat: -1,
+        yoyo: true, // Makes the animation reverse, creating the blink
+        duration: 0.4
+    });
+}
+
 
 // --- TYPEWRITER LOGIC ---
 // Loop through each word in the array and create a typing/deleting animation for it
@@ -96,7 +99,7 @@ micBtn.addEventListener("mousedown", async function () {
         try {
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
             mediaRecorder = new MediaRecorder(stream);
-            
+
             // --- Visualizer Setup ---
             audioContext = new (window.AudioContext || window.webkitAudioContext)();
             analyser = audioContext.createAnalyser();
@@ -112,6 +115,8 @@ micBtn.addEventListener("mousedown", async function () {
             mediaRecorder.ondataavailable = event => {
                 audioChunks.push(event.data);
             };
+
+            // ✅ FIX: The logic to send the chat is moved here
             mediaRecorder.onstop = () => {
                 const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
                 audioUrl = URL.createObjectURL(audioBlob);
@@ -126,6 +131,9 @@ micBtn.addEventListener("mousedown", async function () {
                         }
                     });
                 }
+                
+                // ✅ Trigger the send button click AFTER the audioUrl is created
+                sendBtn.click();
 
                  // Clean up audio context
                 stream.getTracks().forEach(track => track.stop());
@@ -136,7 +144,7 @@ micBtn.addEventListener("mousedown", async function () {
 
             mediaRecorder.start();
             isRecording = true;
-            
+
             // Show visualizer and hide input
             chatInput.classList.add("recording");
             visualizer.style.display = "flex";
@@ -168,9 +176,37 @@ micBtn.addEventListener("mousedown", async function () {
 
 function stopRecordingAndSend() {
     if (isRecording) {
+        mediaRecorder.stop(); // This now triggers the onstop event, which handles sending
+        
+        // ❌ We no longer need to call sendBtn.click() here.
+        // sendBtn.click(); 
+
+        // Hide visualizer and show input
+        chatInput.classList.remove("recording");
+        visualizer.style.display = "none";
+        cancelAnimationFrame(animationFrameId);
+
+
+        micOnSound.pause();
+        micOnSound.currentTime = 0;
+        micOffSound.play();
+        const tl = gsap.timeline();
+        tl.to(micBtn, {
+            scale: 1.2,
+            duration: 0.15,
+            ease: "power2.inOut",
+        }).to(micBtn, {
+            scale: 1,
+            backgroundColor: "transparent",
+            color: "#39462C",
+            duration: 0.3,
+        });
+    }
+}
+function cancelRecording() {
+    if (isRecording) {
         mediaRecorder.stop();
-        sendBtn.click();
-        // isRecording = false;
+        isRecording = false;
 
         // Hide visualizer and show input
         chatInput.classList.remove("recording");
@@ -195,6 +231,7 @@ function stopRecordingAndSend() {
     }
 }
 
+
 function drawVisualizer() {
     animationFrameId = requestAnimationFrame(drawVisualizer);
     analyser.getByteFrequencyData(dataArray);
@@ -211,11 +248,8 @@ function drawVisualizer() {
 
 
 micBtn.addEventListener("mouseup", stopRecordingAndSend);
-micBtn.addEventListener("mouseleave", () => {
-    if (isRecording) {
-        stopRecordingAndSend();
-    }
-});
+micBtn.addEventListener("mouseleave", cancelRecording);
+
 
 
 // --- Image Button Animation ---
@@ -270,7 +304,3 @@ imageBtn.addEventListener("click", function () {
         cameraDiscontinue();
     }
 });
-
-
-
-

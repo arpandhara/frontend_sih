@@ -31,8 +31,18 @@ openCamera.addEventListener("click", async function () {
     }
 });
 
-exit_photo_btn.addEventListener("click" , function(){
+
+function exit_camera(){
+    const stream = video.srcObject;
+    const tracks = stream.getTracks();
+    tracks.forEach(track => track.stop());
+    video.srcObject = null;
     cameraView.style.display = "none";
+}
+
+
+exit_photo_btn.addEventListener("click" , function(){
+    exit_camera();
 })
 
 // Event listener to take the photo
@@ -46,11 +56,7 @@ takePhotoButton.addEventListener("click", function () {
     isImage = true;
 
     // Stop the camera stream and hide the camera view
-    const stream = video.srcObject;
-    const tracks = stream.getTracks();
-    tracks.forEach(track => track.stop());
-    video.srcObject = null;
-    cameraView.style.display = "none";
+    exit_camera();
 });
 
 

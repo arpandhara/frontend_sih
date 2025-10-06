@@ -1,7 +1,9 @@
 let new_chat = document.querySelector(".new_chat");
 let new_chat_icon = document.querySelector(".new_chat img");
+let isNewChat = true;
 
 new_chat.addEventListener("click", function (e) {
+    isNewChat = true;
     crossButtonForImagePreview.click();
     const chatMessages = chat_output_box.querySelectorAll('.inputAndResponse');
     chatMessages.forEach(message => message.remove());
