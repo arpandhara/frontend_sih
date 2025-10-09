@@ -147,7 +147,7 @@ main {
     justify-content: center;
 }
 
-.escalation_to_officer_btn {
+.escalation_to_officer_btn , .complaint_submit{
     padding: .8vw 2.5vw;
     border-radius: 30px;
     border: none;
@@ -229,7 +229,7 @@ main {
     gap: 1vw;
 }
 
-.escalate_to_officer_mobile {
+.escalate_to_officer_mobile{
     display: none;
     padding: .5vw 1.5vw;
     border-radius: 30px;
@@ -709,3 +709,67 @@ audio::-webkit-media-controls-time-remaining-display {
 /* .welcome_components{
     display: none;
 } */
+
+
+.complain_box {
+    position: absolute;
+    height: 25vw;
+    width: 40vw;
+    background-color: #404837;
+    top: 50%;
+    left: 50%;
+    z-index: 1000;
+    transform: translate(-50%, -50%);
+    border-radius: 15px;
+    color: white;
+    padding: 1vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1vw;
+    transition: all 0.5s ease-in-out;
+}
+
+/* --- CSS CHANGES ARE HERE --- */
+
+/* Target the textarea element */
+.complain_box textarea {
+    padding: 1vw;
+    border-radius: 7px;
+    border: none;
+    height: 70%;
+    width: 90%;
+    /* Add this to prevent users from resizing it */
+    resize: none; 
+    /* Good practice for consistent font */
+    font-family: inherit; 
+    font-size: 1rem;
+}
+
+/* Also target the textarea for the :focus state */
+.complain_box textarea:focus {
+    /* To remove the default blue/orange outline on click */
+    outline: none; 
+    border: none;
+}
+
+.complain_box h1 {
+    font-weight: 700;
+    color: #FAF1E4;
+}
+
+/* You might want to style your button too */
+.complain_box .complaint_submit {
+    padding: 0.8vw 1.5vw;
+    border-radius: 7px;
+    border: none;
+    background-color: #FAF1E4;
+    color: #404837;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.complain_box.hidden{
+    display: none;
+}

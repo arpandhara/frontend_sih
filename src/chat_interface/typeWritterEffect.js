@@ -169,17 +169,13 @@ micBtn.addEventListener("mousedown", async function () {
 
         } catch (err) {
             console.error("Error accessing microphone:", err);
-            // You can add a user-facing error message here
         }
     }
 });
 
 function stopRecordingAndSend() {
     if (isRecording) {
-        mediaRecorder.stop(); // This now triggers the onstop event, which handles sending
-        
-        // ❌ We no longer need to call sendBtn.click() here.
-        // sendBtn.click(); 
+        mediaRecorder.stop();  
 
         // Hide visualizer and show input
         chatInput.classList.remove("recording");

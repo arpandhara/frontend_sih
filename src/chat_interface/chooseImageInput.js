@@ -75,6 +75,8 @@ fileInput.addEventListener("change", (e) => {
 
         reader.readAsDataURL(files);
     }
+
+    e.target.value = null;
 })
 
 crossButtonForImagePreview.addEventListener("click", () => {
