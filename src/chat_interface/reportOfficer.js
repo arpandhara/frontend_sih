@@ -8,5 +8,5 @@ reach_an_officer_button.addEventListener("click", function() {
 });
 
 complaint_submit.addEventListener("click" , function(e){
-    complain_box.classList.toggle("hidden")
+    complain_box.classList.toggle("hidden");
 });
